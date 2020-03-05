@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Category from './Category';
-import { CardGroup } from 'react-bootstrap';
+import { CardGroup, Table } from 'react-bootstrap';
+import Movie from './Movie';
 
 
 const categories = [
@@ -68,16 +69,41 @@ const movieCategoryTop5 = {
 
 
 export class GenelView extends Component {
+    constructor(props) {
+        super(props)
+        this.state= {
+            display: false,
+            movies: []
+        }
+    }
+
+    katagoriDegistir = childdengelen => {
+        //console.log(childdengelen);
+
+        this.setState({
+            display: !this.state.display,
+            movies: movieCategoryTop5[childdengelen]
+        })
+    }
+
     render() {
         return (
-            <div>
+            <div className="container">
                 <CardGroup>
                     {
                         categories.map( item => 
-                            <Category  key={item.id} image={item.image}  category={item.category}   description={item.description} />        
+                            <Category   key={item.id} 
+                                        image={item.image}  
+                                        category={item.category}   
+                                        description={item.description} 
+                                        katagoriAl= {this.katagoriDegistir}
+                            />        
                         )
                     }
-            </CardGroup>
+                </CardGroup>
+
+                <Movie movieList={this.state.movies} tabloGoster={this.state.display} />
+                   
             </div>
         )
     }
